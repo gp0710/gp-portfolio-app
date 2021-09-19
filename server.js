@@ -25,7 +25,8 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/2015-12-25", function(req, res) {
+app.get("/api/:date", function(req, res) {
+
   var now = new Date();
   res.json({
     "unix": now.getTime(),
@@ -33,8 +34,8 @@ app.get("/api/2015-12-25", function(req, res) {
   });
 });
 
-app.get("/api/2015-12-25", function(req, res) {
-  let dateString = req.params.date_string;
+app.get("/api/:date", function(req, res) {
+  let dateString = req.params.date;
   let newDateString = parseInt(dateString);
 
   if (newDateString > 10000) {
