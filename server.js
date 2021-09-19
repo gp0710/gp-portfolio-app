@@ -33,8 +33,6 @@ app.get("/api/timestamp", function(req, res) {
   });
 });
 
-
-
 app.get("/api/timestamp/:date_string", function(req, res) {
   let dateString = req.params.date_string;
   let newDateString = parseInt(dateString);
