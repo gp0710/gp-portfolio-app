@@ -25,53 +25,38 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date", function(req, res) {
+/* app.get("/api/:date", function(req, res) {
   res.json({
-    "unix": Date.now(),
-    "utc": new Date()
+
   })
 });
+*/
 
 app.get("/api/:date", function(req, res) {
   let date = req.params.date;
-  console.log(date);
+  if (date.match(/\d{5,}/)){
+    date = +date;
+  }
+  let time = new Date(date);
+  if (time.toUTCString() == "Invalid Date") {
+    res.json({
+      "error": time.toUTCString()
+    })
+  }
   res.json({
-    error : "Invalid Date"
-  });
-});
-
-/* app.get("/api/:date", function(req, res) {
-  var now = new Date();
-  res.json({
-    "unix": now.getTime(),
-    "utc": now.toUTCString()
+    "unix": time.valueOf(),
+    "utc": time.toUTCString()
   });
 });
 
 app.get("/api/:date", function(req, res) {
-  let dateString = req.params.date;
-  let newDateString = parseInt(dateString);
-
-  if (newDateString > 10000) {
-    let unixTime = new Date(newDateString);
-    res.json({
-      "unix": unixTime.getTime(),
-      "utc": unixTime.toUTCString()
-    });
-  }
-
-  let timeValue = new Date(dateString);
-
-  if (timeValue == "Invalid Date") {
-    res.json({ "error": "Invalid Date" });
-  } else {
-    res.json({
-      "unix": timeValue.getTime(),
-      "utc": timeValue.toUTCString()
-    })
-  }
+  let dateTime = new Date();
+  res.json({
+    "unix": dateTime.valueOf(),
+    "utc": dateTime.toUTCString()
+  })
 });
-*/
+
 // listen for requests :)
 var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
