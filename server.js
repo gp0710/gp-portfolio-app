@@ -26,7 +26,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function(req, res) {
+  var then = new Date(2015-12-25);
+  res.json({
+    "unix": then.getTime(),
+    "utc": then.toUTCString()
+  });
+});
 
+app.get("/api/:date", function(req, res) {
   var now = new Date();
   res.json({
     "unix": now.getTime(),
