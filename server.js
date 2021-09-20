@@ -19,18 +19,20 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/timestamp_microservice", function(req, res) {
+  res.sendFile(__dirname + '/views/timestamp_microservice.html');
+});
+
+app.get("/headerParserReq", function(req, res) {
+  res.sendFile(__dirname + '/views/headerParserReq.html');
+});
+
 
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-/* app.get("/api/:date", function(req, res) {
-  res.json({
-
-  })
-});
-*/
 
 app.get("/api/:date", function(req, res) {
   let dateParam = req.params.date;
