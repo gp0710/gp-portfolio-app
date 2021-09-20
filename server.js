@@ -49,11 +49,11 @@ app.get("/api/:date", function(req, res) {
   });
 });
 
-app.get("/api/:date", function(req, res) {
+app.get("/api/", function(req, res) {
   let time = new Date();
   res.json({
-    "unix": date.valueOf(),
-    "utc": date.toUTCString()
+    "unix": time.valueOf(),
+    "utc": time.toUTCString()
   })
 });
 
