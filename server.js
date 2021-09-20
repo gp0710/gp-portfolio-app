@@ -33,12 +33,12 @@ app.get("/api/hello", function (req, res) {
 */
 
 app.get("/api/:date", function(req, res) {
-  let date = req.params.date;
-  if (date.match(/\d{5,}/)){
-    date = +date;
+  let dateParam = req.params.date;
+  if (dateParam.match(/\d{5,}/)){
+    dateParam = +dateParam;
   }
-  let time = new Date(date);
-  if (time.toUTCString() == "Invalid Date") {
+  let time = new Date(dateParam);
+  if (time.toUTCString() === "Invalid Date") {
     res.json({
       "error": time.toUTCString()
     })
@@ -50,10 +50,10 @@ app.get("/api/:date", function(req, res) {
 });
 
 app.get("/api/:date", function(req, res) {
-  let dateTime = new Date();
+  let time = new Date();
   res.json({
-    "unix": dateTime.valueOf(),
-    "utc": dateTime.toUTCString()
+    "unix": date.valueOf(),
+    "utc": date.toUTCString()
   })
 });
 
