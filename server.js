@@ -7,6 +7,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var shortid = require('shortid');
+var dns = require('dns');
+var urlparser = require('url');
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -36,59 +38,9 @@ app.get("/headerParserReq", function(req, res) {
   res.sendFile(__dirname + '/views/headerParserReq.html');
 });
 
-app.get("/urlShortener", function(req, res) {
-  res.sendFile(__dirname + '/views/urlShortener.html');
-});
-
 // your first API endpoint...
 app.get("/api/hello", function(req, res) {
   res.json({greeting: 'hello API'});
-});
-
-//url Shortener
-const ShortURL = mongoose.model('ShortURL', new mongoose.Schema({
-  short_url: String,
-  original_url: String,
-  suffix: String
-}));
-
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
-
-var jsonParser = bodyParser.json()
-
-app.post('/api/shorturl', function(req, res) {
-
-  let request_url = req.body.url;
-  let suffix = shortid.generate();
-  let shorterURL = suffix;
-  // create user in req.body
-
-  let newURL = new ShortURL({
-    short_url: __dirname + "/api/shorturl/" + suffix,
-    original_url: request_url,
-    suffix: suffix
-  })
-
-    newURL.save(function(err, doc) {
-      if (err) return console.error(err);
-      console.log("Document inserted successfully");
-      res.json({
-        "saved": true,
-        "short_url": newURL.short_url,
-        "original_url": newURL.original_url,
-        "suffix": newURL.suffix
-    });
-  });
-});
-
-app.get("/api/shorturl/:suffix", function(req, res) {
-  let generatedSuffix = req.params.suffix;
-  ShortURL.find({suffix: generatedSuffix}).then(function(foundUrls) {
-    let urlRedirect = foundUrls[0];
-    res.redirect(urlRedirect.original_url);
-  });
 });
 
 
